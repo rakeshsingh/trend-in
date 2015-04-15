@@ -1,5 +1,6 @@
 # trend-in
 Scrapping twitter to get trending news in India
 
-''' Requires '''
-* python-twitter
+### Requirements 
+* [python-twitter] python module to interact with twitter
+* 
