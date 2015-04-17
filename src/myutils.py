@@ -12,7 +12,7 @@ def get_config():
             config = json.load(config_file)
             # print(config["twitter"]["consumer_key"])
             return config
-    except IOError as e:
+    except IOError as err:
         print("OS error: {0}".format(err))
 
 
@@ -34,17 +34,33 @@ def get_twitter_api():
     return api
 
 # This is a basic listener that just prints received tweets to stdout.
-
+# My listener needs to print only the time, text, tweet_id, user, if it's a retweet .. and source user if its a retweet 
 
 class StdOutListener(StreamListener):
 
-    def on_data(self, data):
-        print (data)
+    def on_data(self, raw_data):
+        data = json.loads(raw_data)
+        print(data.text)
         return True
 
     def on_error(self, status):
-        print (status)
+        print(status)
 
+class MyListener(StreamListener):
+
+    def on_status(self, status):
+        print(status.text)
+        if status.coordinates:
+            print( 'coords:', status.coordinates)
+        if status.place:
+            print( 'place:', status.place.full_name)
+        return True
+
+    on_event = on_status
+    on_data = on_status
+
+    def on_error(self, status):
+        print (status)
 
 if __name__ == "__main__":
     # get_config()
@@ -53,4 +69,4 @@ if __name__ == "__main__":
     listener = StdOutListener()
     auth = get_auth()
     stream = Stream(auth, listener)
-    stream.filter(track=["india"])
+    stream.filter(locations=[70.04,8.99,93.0,34.52])
