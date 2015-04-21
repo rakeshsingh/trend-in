@@ -34,39 +34,28 @@ def get_twitter_api():
     return api
 
 # This is a basic listener that just prints received tweets to stdout.
-# My listener needs to print only the time, text, tweet_id, user, if it's a retweet .. and source user if its a retweet 
+# My listener needs to print only the time, text, tweet_id, user, if it's
+# a retweet .. and source user if its a retweet
 
-class StdOutListener(StreamListener):
+
+class LinkListener(StreamListener):
 
     def on_data(self, raw_data):
         data = json.loads(raw_data)
-        print(data.text)
+        "I am interested in id, created_at, screen_name, location, in_reply_to_source_id, in_reply_to_screen_name, text"
+        print("\t".join([ data['id_str'], data['created_at'], data['user'][
+              'screen_name'], data['user']['location'], data['text'] ]))
         return True
 
     def on_error(self, status):
         print(status)
 
-class MyListener(StreamListener):
-
-    def on_status(self, status):
-        print(status.text)
-        if status.coordinates:
-            print( 'coords:', status.coordinates)
-        if status.place:
-            print( 'place:', status.place.full_name)
-        return True
-
-    on_event = on_status
-    on_data = on_status
-
-    def on_error(self, status):
-        print (status)
-
 if __name__ == "__main__":
     # get_config()
     # api = get_twitter_api()
     # print(api.verify_credentials())
-    listener = StdOutListener()
-    auth = get_auth()
-    stream = Stream(auth, listener)
-    stream.filter(locations=[70.04,8.99,93.0,34.52])
+    listener=LinkListener()
+    auth=get_auth()
+    stream=Stream(auth, listener)
+    # filtering for India
+    stream.filter(locations=[70.04, 8.99, 93.0, 34.52])

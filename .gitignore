@@ -1,2 +1,5 @@
 config.json
 src/py3env
+src/.ropeproject
+src/tweepy
+venv
