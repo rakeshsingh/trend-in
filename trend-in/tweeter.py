@@ -1,6 +1,5 @@
 # tweeter.py
-import myutils
+import utils
 
-api = myutils.get_twitter_api()
-for status in (api.GetUserTimeline(screen_name='rakesh')):
-    print(status.text.encode('utf-8'))
+api = utils.get_twitter_api()
+print(api.get_user('rakesh'))
