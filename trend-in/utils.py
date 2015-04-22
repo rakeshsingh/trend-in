@@ -1,6 +1,8 @@
 # basic utilities
 import json
 import tweepy
+import re
+
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -44,11 +46,14 @@ class UrlListener(StreamListener):
     """
 
     def on_data(self, status):
+        pattern_url = re.compile(
+            'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
         data = json.loads(status)
         # I am interested in id, created_at, screen_name, location,
         # in_reply_to_source_id, in_reply_to_screen_name, text
-        print("\t".join([data['id_str'], data['created_at'], data['user'][
-              'screen_name'], data['user']['location'], data['text']]))
+        if(pattern_url.match(data['text'])):
+            print("\t".join([data['id_str'], data['created_at'], data['user'][
+                  'screen_name'], data['user']['location'], data['text']]))
         return True
 
     def on_error(self, status):
