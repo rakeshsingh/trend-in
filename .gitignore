@@ -2,5 +2,8 @@ config.json
 src/py3env
 src/.ropeproject
 src/tweepy
-venv
+trend-in/py3env
+trend-in/.ropeproject
+trend-in/tweepy
+py3env
 *.pyc

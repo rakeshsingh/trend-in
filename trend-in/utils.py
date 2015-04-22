@@ -8,7 +8,7 @@ from tweepy import Stream
 
 def get_config():
     try:
-        with open('../config.json') as config_file:
+        with open('config.json') as config_file:
             config = json.load(config_file)
             return config
     except IOError as err:
