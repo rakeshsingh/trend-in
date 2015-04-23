@@ -49,12 +49,27 @@ class UrlListener(StreamListener):
         pattern_url = re.compile(
             'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
         data = json.loads(status)
+        tweet_text = data['text']
+
         # I am interested in id, created_at, screen_name, location,
         # in_reply_to_source_id, in_reply_to_screen_name, text
-        if(pattern_url.match(data['text'])):
-            print("\t".join([data['id_str'], data['created_at'], data['user'][
-                  'screen_name'], data['user']['location'], data['text']]))
+
+        # convert to ascii to suppress unicode encode error
+
+        # if(pattern_url.match(data['text'])):
+        with open('data.tsv', 'a', encoding='utf8') as datafile:
+            datafile.write("\t".join([data['id_str'], data['created_at'], data['user'][
+                           'screen_name'], data['user']['location'], tweet_text]))
+            datafile.write('\n')
         return True
 
     def on_error(self, status):
+        print("below status code was returned")
         print(status)
+
+    def on_exception(self, exception):
+        """
+        handle exception
+        """
+        raise exception
+        return False
