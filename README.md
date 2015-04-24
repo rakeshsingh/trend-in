@@ -16,3 +16,4 @@ The goal of this project to scrap twitter content to get trending news in India.
 ### Requirements 
 * [tweepy] python module to interact with twitter
 * [json] - dealing with json data
+* [nose] : for running unit test
