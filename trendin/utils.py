@@ -16,6 +16,8 @@ def get_config():
             return config
     except IOError as err:
         print("OS error: {0}".format(err))
+        
+    return True
 
 
 def get_logger():
