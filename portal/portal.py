@@ -19,27 +19,28 @@ app.config.from_object(__name__)
 
 
 def connect_db():
-	"""
-	connect to database and get db connection
-	"""
-	return sqlite3.connect(app.config['DATABASE'])
+    """
+    connect to database and get db connection
+    """
+    return sqlite3.connect(app.config['DATABASE'])
 
 
 def init_db():
-	"""
-	initiate the database for the app
-	"""
+    """
+    initiate the database for the app
+    """
     with closing(connect_db()) as db:
-    	with app.open_resource('schema.sql', mode='r') as f:
-        db.cursor().executescript(f.read())
-    db.commit()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        db.commit()
 
 
 # run this functions before and after a request
-# g is a special object in flask 
+# g is a special object in flask
 @app.before_request
 def before_request():
     g.db = connect_db()
+
 
 @app.teardown_request
 def teardown_request(exception):
@@ -48,13 +49,17 @@ def teardown_request(exception):
         db.close()
 
 # request handler functions
+
+
 @app.route('/')
 def show_entries():
     cur = g.db.execute('select title, text from entries order by id desc')
     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
     return render_template('show_entries.html', entries=entries)
 
-# add a new entry 
+# add a new entry
+
+
 @app.route('/add', methods=['POST'])
 def add_entry():
     if not session.get('logged_in'):
@@ -65,7 +70,9 @@ def add_entry():
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
 
-# login request handler 
+# login request handler
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -81,14 +88,14 @@ def login():
     return render_template('login.html', error=error)
 
 # logout request handler
+
+
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('show_entries'))
 
-
-
-# app starting point 
+# app starting point
 if __name__ == '__main__':
     app.run()
