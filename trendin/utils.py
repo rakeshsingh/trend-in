@@ -1,11 +1,11 @@
 # basic utilities
 import json
 import tweepy
-import re
+import csv
+import time
 
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
-from tweepy import Stream
 
 
 def get_config():
@@ -48,21 +48,24 @@ class UrlListener(StreamListener):
     """
 
     def on_data(self, status):
-        pattern_url = re.compile(
-            'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
+        datafile = '/tmp/' + 'data_' + time.strftime("%Y-%m-%d") + ".tsv"
         data = json.loads(status)
+        # get attributes and do cleanup
         tweet_text = data['text']
+        tweet_screen_name = data['user']['screen_name']
+        tweet_location = data['user']['location']
+        tweet_text = tweet_text.strip(' \t\n\r')
+        tweet_screen_name = tweet_screen_name.strip(' \t\n\r')
+        tweet_location = tweet_location.strip(' \t\n\r')
 
         # I am interested in id, created_at, screen_name, location,
         # in_reply_to_source_id, in_reply_to_screen_name, text
 
-        # convert to ascii to suppress unicode encode error
-
-        # if(pattern_url.match(data['text'])):
-        with open('data.tsv', 'a', encoding='utf8') as datafile:
-            datafile.write("\t".join([data['id_str'], data['created_at'], data['user'][
-                           'screen_name'], data['user']['location'], tweet_text]))
-            datafile.write('\n')
+        with open(datafile, 'a', encoding='utf8') as csvfile:
+            csvwriter = csv.writer(csvfile, delimiter='\t', quotechar='|')
+            csvwriter.writerow(
+                [data['id_str'], data['created_at'], tweet_screen_name, tweet_location, tweet_text])
+            # csvwriter.write('\n')
         return True
 
     def on_error(self, status):
