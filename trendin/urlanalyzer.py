@@ -17,16 +17,16 @@ def read_data():
 
 
 def get_urls(text):
-    ''' 
-    this function returns a list of all urls present in the given text 
+    '''
+    this function returns a list of all urls present in the given text
     '''
     return None
 
 
 def get_url_details():
     '''
-    this function returns details of an url 
-    url_subject: a subject for the url 
+    this function returns details of an url
+    url_subject: a subject for the url
     url_type: image, video
     '''
     return None

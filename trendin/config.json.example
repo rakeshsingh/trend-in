@@ -4,5 +4,10 @@
 	"consumer_secret":"dfadfad",
 	"access_token":"fdafd",
 	"access_token_secret":"fdfd"
-	}
+	},
+"trend-in":{
+        "datafile_location":"/tmp",
+        "datafile_prefix":"data",
+        "locations"=[]
+    }
 }
