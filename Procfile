@@ -1,1 +1,1 @@
-web: python portal/portal.py
+web: python portal/hello.py
