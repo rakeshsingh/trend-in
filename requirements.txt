@@ -1,0 +1,4 @@
+Flask==0.10.1
+tweepy==3.3.0
+Jinja2==2.7.3
+itsdangerous == 0.24
