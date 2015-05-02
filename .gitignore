@@ -7,6 +7,7 @@ trendin/.ropeproject
 trendin/tweepy
 py3env
 __pycache__
+venv
 *.pyc
 .ropeproject
 data.tsv

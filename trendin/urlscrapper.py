@@ -1,6 +1,6 @@
 # tweeter.py
-import utils
 import time
+import utils
 from utils import UrlListener
 from tweepy import Stream
 

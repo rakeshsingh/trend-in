@@ -25,8 +25,11 @@ def get_urls(text):
 def get_url_details(url):
     '''
     this function returns details of an url
+    url
     url_subject: a subject for the url
     url_type: image, video
+    url_description: Few texts from the url page
+    url_category: just a place holder( in future, it can be news, sports, business and so on)
     '''
     try:
         fp = request.urlopen(url)

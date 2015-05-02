@@ -6,6 +6,7 @@ import time
 
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
+from trendin.exceptions import NotSupportedDayError
 
 
 def get_config():
@@ -18,6 +19,17 @@ def get_config():
         print("OS error: {0}".format(err))
 
     return True
+
+
+def get_data_file(day):
+    """
+    """
+    if day == 'today':
+        return '/tmp/' + 'data_' + time.strftime("%Y-%m-%d") + ".tsv"
+    elif day == 'yesterday':
+        return '/tmp/' + 'data_' + time.strftime("%Y-%m-%d") + ".tsv"
+    else:
+        raise NotSupportedDayError(day)
 
 
 def get_logger():
@@ -78,3 +90,6 @@ class UrlListener(StreamListener):
         """
         raise exception
         return False
+
+if __name__ == '__main__':
+    get_data_file('someday')
