@@ -20,7 +20,8 @@
   {% endif %}
   <ul class=entries>
   {% for entry in entries %}
-    <li><h2><a href="{{entry.url}}">{{ entry.title }}</a></h2>{{ entry.description|safe }}
+
+    <li><h1>{{entry.rank}}</h1><h2><a href="{{entry.url}}">{{ entry.url }}</a></h2>{{ entry.description|safe }}
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}

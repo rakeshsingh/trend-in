@@ -3,10 +3,15 @@ import json
 import tweepy
 import csv
 import time
-
+import sqlite3
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
-from trendin.exceptions import NotSupportedDayError
+from exceptions import NotSupportedDayError
+
+
+def get_connection():
+    conn = sqlite3.connect('/tmp/portal.db')
+    return conn
 
 
 def get_config():

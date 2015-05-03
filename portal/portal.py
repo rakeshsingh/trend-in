@@ -55,8 +55,8 @@ def teardown_request(exception):
 @app.route('/')
 def show_entries():
     cur = g.db.execute(
-        'select url, title, description, type from entries order by date desc')
-    entries = [dict(url=row[0], title=row[1], description=row[2], type=row[3])
+        'select url, title, description, type,rank from entries order by date,rank desc limit 100')
+    entries = [dict(url=row[0], title=row[1], description=row[2], type=row[3], rank=row[4])
                for row in cur.fetchall()]
     return render_template('show_entries.html', entries=entries)
 
