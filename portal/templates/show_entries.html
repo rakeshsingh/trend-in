@@ -1,29 +1,36 @@
-{% extends "layout.html" %}
-{% block body %}
-  {% if session.logged_in %}
-    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-      <dl>
-        <dt>URL:
-        <dd><input type=text size=30 name=url>
+{% extends "base.html" %}
+{% block content %}
+          <table border="0" cellpadding="0" cellspacing="0" >
 
-        <dt>Title:
-        <dd><input type=text size=30 name=title>
-        
-        <dt>Type[image,video]:
-        <dd><input type=text size=30 name=type>
-
-        <dt>Text:
-        <dd><textarea name=description rows=5 cols=40></textarea>
-        <dd><input type=submit value=Share>
-      </dl>
-    </form>
-  {% endif %}
-  <ul class=entries>
   {% for entry in entries %}
 
-    <li><h1>{{entry.rank}}</h1><h2><a href="{{entry.url}}">{{ entry.url }}</a></h2>{{ entry.description|safe }}
+    <tr align=left>
+      <td>{{entry.rank}}</td>
+      <td>&nbsp;</td>
+    
+      <td><a href="{{entry.url}}">{{ entry.url }}</a></td>
+    </tr>
+
+
+    <tr align = left>
+    <td>&nbsp;</td>
+    
+    <td>&nbsp;</td>
+      <td>{{ entry.description|safe }}</td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    
+    <td>&nbsp;</td>
+
+      <td> 22 points   | <a href="item?id=9496672">2 comments</a>  </td>
+    </tr>
+
+    <tr class="spacer" style="height:5px"></tr>
+          
   {% else %}
-    <li><em>Unbelievable.  No entries here so far</em>
+    <tr>><em>Unbelievable.  No entries here so far</em>
+    </tr>
   {% endfor %}
-  </ul>
+  </table>
 {% endblock %}
