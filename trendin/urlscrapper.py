@@ -6,7 +6,7 @@ from tweepy import Stream
 
 
 def scrap_twitter():
-    """ this function scraps twitter stream of India for URLs"""
+    """ this function scraps twitter stream of India for Cricket related URLs"""
     listener = UrlListener()
     auth = utils.get_twitter_auth()
     tweetstream = Stream(auth, listener)
@@ -19,8 +19,9 @@ def scrap_twitter():
         else:
             if tweetstream.running is False:
                 # filtering for India
-                tweetstream.filter(
-                    locations=[70.04, 8.99, 93.0, 34.52], async=True)
+                tweetstream.filter(track=['cricket'])
+                #tweetstream.filter(
+                #    locations=[70.04, 8.99, 93.0, 34.52], async=True)
         # wake up every 10 minutes to check the stream status
         time.sleep(600)
 

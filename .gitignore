@@ -11,3 +11,5 @@ venv
 *.pyc
 .ropeproject
 data.tsv
+secret/
+secret*.ini

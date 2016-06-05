@@ -1,5 +1,6 @@
 # basic utilities
 import json
+import os
 import tweepy
 import csv
 import time
@@ -8,6 +9,8 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from exceptions import NotSupportedDayError
 
+CWD = os.path.dirname(os.path.realpath(__file__))
+cricket_keywords = ['cricket','ipl','virat kohli','bcci','dhoni']
 
 def get_connection():
     conn = sqlite3.connect('/tmp/portal.db')
@@ -17,12 +20,12 @@ def get_connection():
 def get_config():
     """ read configuration and load into a json object """
     try:
-        with open('config.json') as config_file:
+        print(CWD)
+        with open( CWD + '/config.json') as config_file:
             config = json.load(config_file)
             return config
     except IOError as err:
         print("OS error: {0}".format(err))
-
     return True
 
 
@@ -97,4 +100,4 @@ class UrlListener(StreamListener):
         return False
 
 if __name__ == '__main__':
-    get_data_file('someday')
+    get_twitter_auth()
