@@ -13,3 +13,4 @@ venv
 data.tsv
 secret/
 secret*.ini
+venv/
